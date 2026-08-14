@@ -1,0 +1,69 @@
+/* ── Reset e base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Variáveis de tema (modo claro — padrão Tabler) ─────── */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  --radius: 7px;
+
+  /* superfícies */
+  --surface-0:   #f0f2f5;
+  --surface-1:   #e8eaed;
+  --surface-2:   #ffffff;
+
+  /* texto */
+  --text-primary:   #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted:     #718096;
+
+  /* bordas */
+  --border:        #e2e8f0;
+  --border-strong: #cbd5e0;
+}
+
+/* ── Modo escuro automático ──────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-0:   #0f172a;
+    --surface-1:   #1e293b;
+    --surface-2:   #263248;
+
+    --text-primary:   #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted:     #64748b;
+
+    --border:        #2d3f55;
+    --border-strong: #3d5068;
+  }
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--surface-0);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* scrollbar discreta */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* focus visível para acessibilidade */
+:focus-visible {
+  outline: 2px solid #1a3a6b;
+  outline-offset: 2px;
+}
