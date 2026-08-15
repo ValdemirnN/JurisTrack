@@ -364,18 +364,20 @@ function DetalheProcesso({ processoId, onVoltar, perfil }) {
   const [salvando, setSalvando] = useState(false);
   const podeEditar = perfil?.role === "admin" || perfil?.role === "advogado";
 
-  useEffect(() => {
-    async function carregar() {
-      setLoading(true);
-      try {
-        const data = await ProcessoService.buscarPorId(processoId);
-        setP(data);
-        const ms = await MovimentacaoService.listar(processoId);
-        setMovs(ms);
-      } finally { setLoading(false); }
-    }
-    carregar();
-  }, [processoId]);
+useEffect(() => {
+  // Trata o link do email de confirmação
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token')) {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSessao(session);
+      window.history.replaceState({}, '', '/');
+    });
+  } else {
+    supabase.auth.getSession().then(({ data: { session } }) => setSessao(session));
+  }
+  const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setSessao(s));
+  return () => subscription.unsubscribe();
+}, [processoId]);
 
   async function adicionarMov() {
     if (!novoMov.trim()) return;
